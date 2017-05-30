@@ -3,17 +3,18 @@
 
 # Question 1 (Naked Twins)
 Q: How do we use constraint propagation to solve the naked twins problem?  
-A: *Student should provide answer here*
+A: For any pair of cells in the grid with the exact same two values left, we can propagate those two values as a constraint, eliminating them from all peers.
 
 # Question 2 (Diagonal Sudoku)
 Q: How do we use constraint propagation to solve the diagonal sudoku problem?  
-A: *Student should provide answer here*
+A: We add additionial unitlists for each diagonal. These two diagonal
+unitlists are then treated the same way as the row, column and square unitlists.
 
 ### Install
 
 This project requires **Python 3**.
 
-We recommend students install [Anaconda](https://www.continuum.io/downloads), a pre-packaged Python distribution that contains all of the necessary libraries and software for this project. 
+We recommend students install [Anaconda](https://www.continuum.io/downloads), a pre-packaged Python distribution that contains all of the necessary libraries and software for this project.
 Please try using the environment we provided in the Anaconda lesson of the Nanodegree.
 
 ##### Optional: Pygame
@@ -42,3 +43,15 @@ To submit your code to the project assistant, run `udacity submit` from within t
 
 This process will create a zipfile in your top-level directory named sudoku-<id>.zip.  This is the file that you should submit to the Udacity reviews system.
 
+
+2 6 7 |9 4 5 |3 8 1
+8 5 3 |7 1 6 |2 4 9
+4 9 1 |8 2 3 |5 7 6
+------+------+------
+5 7 6 |4 3 8 |1 9 2
+3 8 4 |1 9 2 |6 5 7
+1 2 9 |6 5 7 |4 3 8
+------+------+------
+6 4 2 |3 7 9 |8 1 5
+9 3 5 |2 8 1 |7 6 4
+7 1 8 |5 6 4 |9 2 3
