@@ -55,12 +55,8 @@ ROW_UNITS = [cross(r, COLUMNS) for r in ROWS]
 COLUMN_UNITS = [cross(ROWS, c) for c in COLUMNS]
 SQUARE_UNITS = [cross(rs, cs) for rs in ('ABC', 'DEF', 'GHI')
                 for cs in ('123', '456', '789')]
-DIAGONAL_UNITS = [[row + col
-                   for ind_col, col in enumerate(COLUMNS)
-                   for ind_row, row in enumerate(ROWS) if ind_col == ind_row],
-                  [row + col
-                   for ind_col, col in enumerate(reversed(COLUMNS))
-                   for ind_row, row in enumerate(ROWS) if ind_col == ind_row]]
+DIAGONAL_UNITS = [[row + col for row, col in zip(ROWS, COLUMNS)],
+                  [row + col for row, col in zip(ROWS, COLUMNS[::-1])]]
 
 UNITLIST = ROW_UNITS + COLUMN_UNITS + SQUARE_UNITS + DIAGONAL_UNITS
 
