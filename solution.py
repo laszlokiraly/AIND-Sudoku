@@ -46,6 +46,7 @@ def naked_twins(values):
 def cross(some_a, some_b):
     """cross product of some a and some b"""
     return [s + t for s in some_a for t in some_b]
+
 # general structures for sudoku (utils.py)
 ROWS = 'ABCDEFGHI'
 COLUMNS = '123456789'
@@ -54,13 +55,15 @@ ROW_UNITS = [cross(r, COLUMNS) for r in ROWS]
 COLUMN_UNITS = [cross(ROWS, c) for c in COLUMNS]
 SQUARE_UNITS = [cross(rs, cs) for rs in ('ABC', 'DEF', 'GHI')
                 for cs in ('123', '456', '789')]
-DIAGONAL_1_UNITS = [[row + col
-                     for ind_col, col in enumerate(COLUMNS)
-                     for ind_row, row in enumerate(ROWS) if ind_col == ind_row]]
-DIAGONAL_2_UNITS = [[row + col
-                     for ind_col, col in enumerate(reversed(COLUMNS))
-                     for ind_row, row in enumerate(ROWS) if ind_col == ind_row]]
-UNITLIST = ROW_UNITS + COLUMN_UNITS + SQUARE_UNITS + DIAGONAL_1_UNITS + DIAGONAL_2_UNITS
+DIAGONAL_UNITS = [[row + col
+                   for ind_col, col in enumerate(COLUMNS)
+                   for ind_row, row in enumerate(ROWS) if ind_col == ind_row],
+                  [row + col
+                   for ind_col, col in enumerate(reversed(COLUMNS))
+                   for ind_row, row in enumerate(ROWS) if ind_col == ind_row]]
+
+UNITLIST = ROW_UNITS + COLUMN_UNITS + SQUARE_UNITS + DIAGONAL_UNITS
+
 UNITS = dict((cell, [units for units in UNITLIST if cell in units]) for cell in CELLS)
 PEERS = dict((cell, set(sum(UNITS[cell], [])) - set([cell])) for cell in CELLS)
 
@@ -112,9 +115,9 @@ def eliminate(values):
     for key, value in values.items():
         if len(value) == 1:
             for peer in PEERS[key]:
-                if len(values[peer]) > 1:
-                    values[peer] = values[peer].replace(value, "")
+                values[peer] = values[peer].replace(value, "")
     return values
+
 
 def only_choice(values):
     """
